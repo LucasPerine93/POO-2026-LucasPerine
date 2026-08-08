@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <memory>
+
+class Veiculo {
+protected:  // Permite que os dados marca e modelo sejam acessados pela outra classe
+    std::string marca;
+    std::string modelo;
+
+public:
+    Veiculo(std::string mrc, std::string mdl) 
+        : marca(mrc), modelo(mdl) {}
+
+    virtual void exibir_status() { // Função virtual, permite que a classe filha escreva por cima da classe mãe
+        std::cout << " Marca: " << marca << " | "
+                  << " Modelo: " << modelo;
+    }
+
+    virtual ~Veiculo() = default; // Destroi os objetos de forma automatica
+};
+
+class Carro : public Veiculo {
+private:
+    int numPortas;
+
+public:
+    Carro(std::string mrc, std::string mdl, int port) 
+        : Veiculo(mrc, mdl), numPortas(port) {}
+
+    void exibir_status() override {
+        std::cout << " Marca: " << marca << " | "
+                  << " Modelo: " << modelo << " | "
+                  << " Numero de portas: " << numPortas << "\n";  
+    }
+
+
+};
+
+int main() {
+    std::unique_ptr<Veiculo> c1 = std::make_unique<Carro>("Bugatti", "Chiron", 2); // Cria o objeto apartir da classe carro de forma segura na biblioteca memory
+    c1->exibir_status();
+
+    return 0;
+}
