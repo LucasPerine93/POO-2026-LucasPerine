@@ -1,6 +1,6 @@
-#include <iostream>
-#include <string>
-#include <memory>
+#include <iostream> // Controla o fluxo de dados no terminal
+#include <string> // Permite usar strings (C++ moderno)
+#include <memory> // Aloca os objetos de forma mais facil e segura
 
 class Veiculo {
 protected:  // Permite que os dados marca e modelo sejam acessados pela outra classe
