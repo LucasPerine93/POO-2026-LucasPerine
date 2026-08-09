@@ -8,11 +8,11 @@ class Produto:
         self.preco = self.preco - valorDesconto
         
         print(f"O desconto foi de {porcentagem}%")
-        print(f"O valor do produto agora é: R${self.preco} \n")
+        print(f"O valor do produto agora é: R${self.preco:.2f} \n")
         
     def exibir_dados(self):
         print(f"Nome do produto {self.nome}")
-        print(f"Preco do produto: {self.preco}")
+        print(f"Preco do produto: {self.preco:.2f}")
         
 class Livro(Produto):
     def __init__(self, nome, preco, autor):
@@ -36,11 +36,11 @@ l1 = Livro("O Destino Chega", 49.99, "MARVEL")
 e1 = Eletronico("Arduino UNO Q", 359.9, 3.3)
 
 l1.exibir_dados()
-l1.aplicar_desconto(30)
+l1.aplicar_desconto(15)
 l1.exibir_dados()
 
 e1.exibir_dados()
-e1.aplicar_desconto(45)
+e1.aplicar_desconto(10)
 e1.exibir_dados()
 
         

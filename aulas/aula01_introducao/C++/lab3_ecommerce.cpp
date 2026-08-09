@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip> // Controla como numeros, textos e valres seram exibidos na tela, formata a saida dos dados
 #include <string>
 #include <memory>
 
@@ -21,14 +22,14 @@ public:
         preco = preco - desconto;
 
         std::cout << "Desconto no produto: " << nome << "\n"
-                  << "O desconto foi de: " << porcentagem << "%" << "\n"
-                  << "O valor do produto agora e: R$" << preco << "\n\n"; 
+                  << "O desconto foi de: " << std::fixed << std::setprecision(1) << porcentagem << "%" << "\n"
+                  << "O valor do produto agora e: R$" << std::fixed << std::setprecision(2) << preco << "\n\n"; 
 
     }
 
     virtual void exibir_dados() {
         std::cout << "Nome do produto: " << nome << "\n"
-                  << "Preco do produto: R$" << preco << "\n\n";   
+                  << "Preco do produto: R$" << std::fixed << std::setprecision(2) << preco << "\n\n";   
     }
 };
 
@@ -42,7 +43,7 @@ public:
 
     void exibir_dados() override {
         std::cout << "Nome do produto: " << nome << "\n"
-                  << "Preco do produto: R$" << preco << "\n"
+                  << "Preco do produto: R$" << std::fixed << std::setprecision(2) << preco << "\n"
                   << "Autor: " << autor << "\n\n";
     }
 };
@@ -57,8 +58,8 @@ public:
 
     void exibir_dados() override {
         std::cout << "Nome do produto: " << nome << "\n"
-                  << "Preco do produto: R$" << preco << "\n"
-                  << "Voltagem: " << voltagem << "\n\n";
+                  << "Preco do produto: R$" << std::fixed << std::setprecision(2) << preco << "\n"
+                  << "Voltagem: " << std::fixed << std::setprecision(1) << voltagem << "v" << "\n\n";
     }
 };
 
@@ -67,11 +68,14 @@ int main() {
     std::unique_ptr<Produto> p2 = std::make_unique<Eletronico>("Arduino UNO Q", 359.9, 3.3);
 
     p1->exibir_dados();
-    p1->aplicar_desconto(30);
+    p1->aplicar_desconto(15);
     p1->exibir_dados();
 
     p2->exibir_dados();
-    p2->aplicar_desconto(45);
+    p2->aplicar_desconto(10);
     p2->exibir_dados();
     return 0;
 }
+
+// std::fixed -> exibe o numero como decimal
+// std::setprecision(2) -> define que o numero sera exibido com 2 casas decimais
