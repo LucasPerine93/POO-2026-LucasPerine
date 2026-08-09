@@ -27,7 +27,7 @@ public:
     Carro(std::string mrc, std::string mdl, int port) 
         : Veiculo(mrc, mdl), numPortas(port) {}
 
-    void exibir_status() override {
+    void exibir_status() override { // Override garante que esse metodo sera sobrescrito no metodo virtual da mãe
         std::cout << " Marca: " << marca << " | "
                   << " Modelo: " << modelo << " | "
                   << " Numero de portas: " << numPortas << "\n";  
@@ -42,3 +42,7 @@ int main() {
 
     return 0;
 }
+
+/* Destrutor virtual ~ClasseMae(): Sempre inclua um destrutor
+ virtual na classe mãe se pretender manipular instâncias de subclasses 
+ através de ponteiros para a classe base. */
