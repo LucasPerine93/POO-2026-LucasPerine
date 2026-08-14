@@ -7,7 +7,7 @@ class Funcionario:
         bonus = 0.05 * self.salario_base
         self.salario_base = self.salario_base + bonus
 
-        print(f"{self.nome}, seu bonus é de: {bonus} | O salario final é {self.salario_base}")
+        print(f"{self.nome}, seu bonus é de: R${bonus} | O salario final é R${self.salario_base}")
 
 class Gerente(Funcionario):
     def __init__(self, nome, salario_base, valor_fixo):
@@ -18,7 +18,7 @@ class Gerente(Funcionario):
         super().calcular_bonus()
         self.salario_base = self.salario_base + 1000
 
-        print(f"O Gerente - {self.nome} - vai ganhar com o bonus {self.salario_base}")
+        print(f"O Gerente - {self.nome} - vai ganhar com o bonus de valor fixo (R${self.valor_fixo}) R${self.salario_base}")
 
 class Vendedor(Funcionario):
     def __init__(self, nome, salario_base):
@@ -28,5 +28,12 @@ class Vendedor(Funcionario):
         bonus = 0.1 * self.salario_base
         self.salario_base = self.salario_base + bonus
 
-        print(f"{self.nome}, seu bonus é de: {bonus} | O salario final é {self.salario_base}")
+        print(f"{self.nome}, seu bonus é de: R${bonus} | O salario final é R${self.salario_base}")
 
+funcionario = Funcionario("Lucas", 40000)
+gerente = Gerente("Xucas", 50000, 1000)
+vendedor = Vendedor("Luxas", 5000)
+
+funcionario.calcular_bonus()
+gerente.calcular_bonus()
+vendedor.calcular_bonus()
