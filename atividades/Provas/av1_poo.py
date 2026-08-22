@@ -8,7 +8,7 @@ class Funcionario:
         return self.__salario_base
 
     def calcular_salario_final(self):
-        return print(f"Salario base é de: {self.get_salario_base()}")
+        return print(f"Salario base de {self.nome} é de: {self.get_salario_base()}")
 
     def set_salario_base(self, novo_salario):
 
@@ -44,9 +44,10 @@ class Desenvolvedor(Funcionario):
             super().calcular_salario_final()
 
 
-f1 = Funcionario("Lucas", 123, 4000)
-f2 = Gerente("xucas", 456, 5000, 450)
-f3 = Desenvolvedor("zucas", 890, 6000, "Senior")
+f1 = Funcionario("Miguel", 123, 4000)
+f2 = Gerente("Pedro", 456, 5000, 450)
+f3 = Desenvolvedor("Lucas", 930, 6000, "Senior")
+f4 = Desenvolvedor("Luiz", 232, 5200, "Junior")
 
 f1.calcular_salario_final()
 f1.set_salario_base(7000)
@@ -54,13 +55,4 @@ f1.set_salario_base(-7000)
 
 f2.calcular_salario_final()
 f3.calcular_salario_final()
-
-        
-
-    
-    
-
-    
-
-    
-        
+f4.calcular_salario_final() 
