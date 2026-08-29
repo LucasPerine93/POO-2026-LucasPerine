@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <iomanip>
+#include <cmath>
 
 class Funcionario {
 private:
@@ -12,7 +13,7 @@ protected:
     std::string matricula;
     
 public:
-    Funcionario (std::string n, std::string m, double sb)
+    Funcionario (const std::string& n, const std::string& m, double sb)
         : nome(n), matricula(m), salario_base(sb) {}
 
     virtual double get_salario_base() const {
@@ -20,7 +21,7 @@ public:
     }
 
     virtual void calcular_salario_final() {
-        std::cout << "Salario base de " << nome << " e de R$" << get_salario_base() << "\n";
+        std::cout << "Salario base de " << nome << " e de R$" << std::fixed << std::setprecision(2) << get_salario_base() << "\n";
     }
 
     void set_salario_base(double novo_salario) {
@@ -32,7 +33,7 @@ public:
 
         } 
         else {
-            std::cout << "Salario invalido, Funcionario: " << nome 
+            std::cout << "[ERRO]: Salario invalido, Funcionario: " << nome 
                       << "  | Matricula: " << matricula 
                       << ", tentativa de alteracao para R$" 
                       << std::fixed << std::setprecision(2) << novo_salario << "\n";
@@ -44,18 +45,18 @@ public:
 
 class Gerente : public Funcionario {
 private:
-    float bonus_gestao;
+    double bonus_gestao;
 
 public:
-    Gerente (std::string n, std::string m, double sb, float bg) 
+    Gerente (const std::string& n, const std::string& m, double sb, double bg) 
         : Funcionario(n, m, sb), bonus_gestao(bg) {}
 
     void calcular_salario_final() override {
-        double salario = abs(bonus_gestao) + get_salario_base();
-        
+        double salario = std::fabs(bonus_gestao) + get_salario_base();
+
         std::cout << "Salario do Gerente " << nome 
-                  << " com o bonus de R$" << bonus_gestao 
-                  << " e R$" << salario << "\n";
+                  << " com o bonus de R$" << std::fixed << std::setprecision(2) << bonus_gestao 
+                  << " e R$" << std::fixed << std::setprecision(2) << salario << "\n";
 
     }
 };
@@ -65,7 +66,7 @@ private:
     std::string nivel;
 
 public:
-    Desenvolvedor (std::string n, std::string m, double sb, std::string nv)
+    Desenvolvedor (const std::string& n, const std::string& m, double sb, const std::string& nv)
         : Funcionario(n, m, sb), nivel(nv) {}
 
     void calcular_salario_final() override {
@@ -80,7 +81,7 @@ public:
         else {
             std::cout << "O salario do desenvolvedor " << nome 
                       << " nivel: " << nivel 
-                      << " e R$" << get_salario_base() << "\n";
+                      << " e R$" << std::fixed << std::setprecision(2) << get_salario_base() << "\n";
 
         }
     }
