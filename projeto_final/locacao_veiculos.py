@@ -35,4 +35,32 @@ class Veiculos:
 
         else:
             raise ValueError(f"[ERRO]: O valor da diaria deve ser maior que 0")
+
+    def calcular_aluguel(self):
+        pass
+
+class Carro(Veiculos):
+    def __init__(self, modelo, placa, valor_diaria, portas):
+        super().__init__(modelo, placa, valor_diaria)
+
+        self.portas = portas
+        self.__taxa_fixa = 50
+        self.__valor_diaria = 193
+
+    def calcular_aluguel(self, valor: int):
+        if valor > 193:
+            dias_alugados = (valor + self.__taxa_fixa) // self.__valor_diaria
+
+            print(f"O carro de modelo: {self.get_modelo()}, foi alugado por {dias_alugados}  dias")
+            print("------- RESUMO -------")
+            print(f"Valor alugado: {valor}")
+            print(f"Taxa de limpeza: {self.__taxa_fixa}")
+            print(f"Dias com o carro: {dias_alugados} dias")
+            print(f"Configuracao: carro com {self.portas} portas")
+            print("----------------------")
+
+        else:
+            raise ValueError("Valo menor que 193 (preço da diaria) ")
+
+        
                    
