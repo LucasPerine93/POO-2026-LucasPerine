@@ -4,13 +4,13 @@ class Veiculos:
         self.__placa = placa
         self.__valor_diaria = valor_diaria
 
-    def get_modelo(self):
+    def get_modelo(self) -> str:
         return self.__modelo
 
-    def get_placa(self):
+    def get_placa(self) -> str:
         return self.__placa
 
-    def get_valor_diaria(self):
+    def get_valor_diaria(self) -> int:
         return self.__valor_diaria
 
     def set_modelo(self, novo_modelo: str):
@@ -45,11 +45,10 @@ class Carro(Veiculos):
 
         self.portas = portas
         self.__taxa_fixa = 50
-        self.__valor_diaria = 193
 
     def calcular_aluguel(self, valor: int):
         if valor > 193:
-            dias_alugados = (valor + self.__taxa_fixa) // self.__valor_diaria
+            dias_alugados = (valor + self.__taxa_fixa) // self.get_valor_diaria()
 
             print(f"O carro de modelo: {self.get_modelo()}, foi alugado por {dias_alugados}  dias")
             print("------- RESUMO -------")
@@ -60,7 +59,26 @@ class Carro(Veiculos):
             print("----------------------")
 
         else:
-            raise ValueError("Valo menor que 193 (preço da diaria) ")
+            raise ValueError(f"Valor menor que {self.get_valor_diaria} (preço da diaria) ")
 
+class Moto(Veiculos):
+    def __init__(self, modelo, placa, valor_diaria, cilindradas):
+        super().__init__(modelo, placa, valor_diaria)
+
+        self.cilindradas = cilindradas
+        self.__taxa_fixa = 10
+
+    def calcular_aluguel(self, valor: int):
+        if valor > self.get_valor_diaria():
+            dias_alugados = (valor * (self.__taxa_fixa / 100)) // self.get_valor_diaria()
+
+            print(f"A moto de modelo: {self.get_modelo()}, foi alugado por {dias_alugados}  dias")
+            print("------- RESUMO -------")
+            print(f"Valor alugado: {valor}")
+            print(f"Taxa de: {self.__taxa_fixa}%")
+            print(f"Dias com a moto: {dias_alugados} dias")
+            print(f"Configuracao: moto com {self.cilindradas} cilindradas")
+            print("----------------------")
         
-                   
+        else:
+            raise ValueError(f"Valor menor que {self.get_valor_diaria} (preço da diaria)")
