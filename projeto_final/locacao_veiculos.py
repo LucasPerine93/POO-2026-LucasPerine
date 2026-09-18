@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 class Veiculos:
     def __init__(self, modelo, placa, valor_diaria):
         self.__modelo = modelo
@@ -36,6 +38,7 @@ class Veiculos:
         else:
             raise ValueError(f"[ERRO]: O valor da diaria deve ser maior que 0")
 
+    @abstractmethod
     def calcular_aluguel(self):
         pass
 
@@ -46,15 +49,15 @@ class Carro(Veiculos):
         self.portas = portas
         self.__taxa_fixa = 50
 
-    def calcular_aluguel(self, valor: int):
-        if valor > 193:
-            dias_alugados = (valor + self.__taxa_fixa) // self.get_valor_diaria()
+    def calcular_aluguel(self, dias: int):
+        if dias > 0:
+            valor = (dias * self.get_valor_diaria()) + self.__taxa_fixa
 
-            print(f"O carro de modelo: {self.get_modelo()}, foi alugado por {dias_alugados}  dias")
+            print(f"\nO carro de modelo: {self.get_modelo()}, foi alugado por {dias}  dias")
             print("------- RESUMO -------")
-            print(f"Valor alugado: {valor}")
+            print(f"Valor alugado: {valor:.2f}")
             print(f"Taxa de limpeza: {self.__taxa_fixa}")
-            print(f"Dias com o carro: {dias_alugados} dias")
+            print(f"Dias com o carro: {dias} dias")
             print(f"Configuracao: carro com {self.portas} portas")
             print("----------------------")
 
@@ -68,17 +71,57 @@ class Moto(Veiculos):
         self.cilindradas = cilindradas
         self.__taxa_fixa = 10
 
-    def calcular_aluguel(self, valor: int):
-        if valor > self.get_valor_diaria():
-            dias_alugados = (valor * (self.__taxa_fixa / 100)) // self.get_valor_diaria()
+    def calcular_aluguel(self, dias: int):
+        if dias > 0:
+            valor = (dias * self.get_valor_diaria()) * (self.__taxa_fixa / 100)
 
-            print(f"A moto de modelo: {self.get_modelo()}, foi alugado por {dias_alugados}  dias")
+            print(f"\nA moto de modelo: {self.get_modelo()}, foi alugado por {dias}  dias")
             print("------- RESUMO -------")
-            print(f"Valor alugado: {valor}")
+            print(f"Valor alugado: {valor:.2f}")
             print(f"Taxa de: {self.__taxa_fixa}%")
-            print(f"Dias com a moto: {dias_alugados} dias")
+            print(f"Dias com a moto: {dias} dias")
             print(f"Configuracao: moto com {self.cilindradas} cilindradas")
             print("----------------------")
         
         else:
             raise ValueError(f"Valor menor que {self.get_valor_diaria} (preço da diaria)")
+
+veiculos = [
+    Carro("Corola", "BHU-0935", 150, 4),
+    Carro("Ferrari", "FER-9393", 930, 2),
+    Moto("Tiger", "TIG-9373", 80, 800),
+    Moto("Panigale", "DUC-9393", 293, 1000)
+]
+
+def exibir_opcoes():
+    print("\n1. Simular folha de pagamento de todos")
+    print("0. Sair")
+
+
+def main():
+    while True:
+        exibir_opcoes()
+
+        try:
+            opcao = int(input("Digite um numero: "))
+        except ValueError:
+            print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+            continue
+
+        if opcao == 1:
+            try:
+                dias = int(input("Para quantos dias: "))
+            except ValueError:
+                print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+
+            for i in veiculos:
+                i.calcular_aluguel(dias)
+
+        else:
+            print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+
+        if opcao == 0:
+            break
+
+if __name__ == "__main__":
+    main()
