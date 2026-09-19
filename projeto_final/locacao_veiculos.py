@@ -91,7 +91,7 @@ class Moto(Veiculo):
             valor = (dias * self.get_valor_diaria())
             valor_com_taxa = valor - ((self.__taxa_fixa / 100) * valor)
 
-            print(f"\nA moto de modelo: {self.get_modelo()}, foi alugado por {dias}  dias")
+            print(f"\nA moto de modelo: {self.get_modelo()}, foi alugada por {dias}  dias")
             print("------- RESUMO -------")
             print(f"Valor alugado: {valor_com_taxa:.2f}")
             print(f"Taxa de desconto: {self.__taxa_fixa}%")
@@ -112,6 +112,7 @@ veiculos = [
 def exibir_opcoes():
     print("\n1. Simular aluguel da frota inteira")
     print("2. Cadastrar novo carro")
+    print("3. Cadastrar nova moto")
     print("0. Sair\n")
 
 
@@ -130,6 +131,9 @@ def main():
 
         elif opcao == 2:
             cadastrar_carro()
+
+        elif opcao == 3:
+            cadastrar_moto()
 
         elif opcao == 0:
             print("Saindo...")
@@ -158,6 +162,9 @@ def cadastrar_carro():
         modelo_novo = str(input("Digite o modelo: "))
         if not modelo_novo.strip():
             raise ValueError()
+
+        if not isinstance(modelo_novo, str):
+            raise TypeError("Digite um tipo valido para modelo (string)")
         
     except (ValueError, TypeError):
         print("Digite um nome valido para modelo\n")
@@ -167,6 +174,9 @@ def cadastrar_carro():
         placa_nova = str(input("Digite a placa: "))
         if not placa_nova.strip():
             raise ValueError("Digite um valor valido para placa!\n")
+
+        if not isinstance(placa_nova, str):
+            raise TypeError("Digite um tipo valido para placa (string)")
         
         for i in veiculos:
             placa_frota = i.get_placa()
@@ -179,6 +189,15 @@ def cadastrar_carro():
         return
 
     try:
+        valor_diaria = int(input("Digite o valor da diaria: "))
+        if valor_diaria is None or valor_diaria <= 0:
+            raise ValueError()
+        
+    except (ValueError, TypeError):
+        print("Digite um valor inteiro e valido para a diaria!\n")
+        return
+    
+    try:
         portas = int(input("Digite o numero de portas: "))
         if portas is None or portas <= 0:
             raise ValueError()
@@ -186,6 +205,37 @@ def cadastrar_carro():
     except (ValueError, TypeError):
         print("Digite um valor inteiro e valido para as portas!\n")
         return
+
+def cadastrar_moto():
+    try:
+        modelo_novo = str(input("Digite o modelo: "))
+        if not modelo_novo.strip():
+            raise ValueError()
+
+        if not isinstance(modelo_novo, str):
+            raise TypeError("Digite um tipo valido para modelo (string)")
+        
+    except (ValueError, TypeError):
+        print("Digite um nome valido para modelo\n")
+        return
+
+    try:
+        placa_nova = str(input("Digite a placa: "))
+        if not placa_nova.strip():
+            raise ValueError("Digite um valor valido para placa!\n")
+
+        if not isinstance(placa_nova, str):
+            raise TypeError("Digite um tipo valido para placa (string)")
+        
+        for i in veiculos:
+            placa_frota = i.get_placa()
+
+            if placa_frota == placa_nova:
+                raise ValueError("Essa placa ja existe na frota!")
+
+    except (ValueError, TypeError) as e:
+            print(e)
+            return
 
     try:
         valor_diaria = int(input("Digite o valor da diaria: "))
@@ -196,10 +246,18 @@ def cadastrar_carro():
         print("Digite um valor inteiro e valido para a diaria!\n")
         return
 
+    try:
+        cilindradas = int(input("Digite quantas cilindradas a moto tem: "))
+        if cilindradas is None or cilindradas <= 0:
+            raise ValueError()
+        
+    except (ValueError, TypeError):
+        print("Digite um valor inteiro e valido para as cilindradas!\n")
+        return
 
-    novo_carro = Carro(modelo=modelo_novo, placa=placa_nova, portas=portas, valor_diaria=valor_diaria)
-    veiculos.append(novo_carro)
-    print("Carro cadastrado com sucesso")
+    nova_moto = Moto(modelo=modelo_novo, placa=placa_nova, cilindradas=cilindradas, valor_diaria=valor_diaria)
+    veiculos.append(nova_moto)
+    print("Moto cadastrada com sucesso")
 
 if __name__ == "__main__":
     main()
