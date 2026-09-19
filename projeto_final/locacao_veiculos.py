@@ -111,6 +111,7 @@ veiculos = [
 
 def exibir_opcoes():
     print("\n1. Simular aluguel da frota inteira")
+    print("2. Cadastrar novo carro")
     print("0. Sair\n")
 
 
@@ -120,22 +121,15 @@ def main():
 
         try:
             opcao = int(input("Digite um numero: "))
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError):
             print("[ERRO]: Digite apenas numeros inteiros e validos\n")
             continue
 
         if opcao == 1:
-            try:
-                dias = int(input("Para quantos dias: "))
-            except (ValueError, TypeError) as e:
-                print("[ERRO]: Digite apenas numeros inteiros e validos\n")
-                continue
+            simular_aluguel()
 
-            try:
-                 for i in veiculos:
-                    i.calcular_aluguel(dias)
-            except (ValueError, TypeError) as e:
-                print(e)
+        elif opcao == 2:
+            cadastrar_carro()
 
         elif opcao == 0:
             print("Saindo...")
@@ -143,6 +137,69 @@ def main():
 
         else:
             print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+
+def simular_aluguel():
+    try:
+        dias = int(input("Para quantos dias: "))
+        if dias is None or dias <= 0:
+            raise ValueError()
+    except (ValueError, TypeError):
+        print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+        return
+    
+    try:
+        for i in veiculos:
+            i.calcular_aluguel(dias)
+    except (ValueError, TypeError) as e:
+        print(e)
+
+def cadastrar_carro():
+    try:
+        modelo_novo = str(input("Digite o modelo: "))
+        if not modelo_novo.strip():
+            raise ValueError()
+        
+    except (ValueError, TypeError):
+        print("Digite um nome valido para modelo\n")
+        return
+
+    try:
+        placa_nova = str(input("Digite a placa: "))
+        if not placa_nova.strip():
+            raise ValueError("Digite um valor valido para placa!\n")
+        
+        for i in veiculos:
+            placa_frota = i.get_placa()
+
+            if placa_frota == placa_nova:
+                raise ValueError("Essa placa ja existe na frota!")
+
+    except (ValueError, TypeError) as e:
+        print(e)
+        return
+
+    try:
+        portas = int(input("Digite o numero de portas: "))
+        if portas is None or portas <= 0:
+            raise ValueError()
+        
+    except (ValueError, TypeError):
+        print("Digite um valor inteiro e valido para as portas!\n")
+        return
+
+    try:
+        valor_diaria = int(input("Digite o valor da diaria: "))
+        if valor_diaria is None or valor_diaria <= 0:
+            raise ValueError()
+        
+    except (ValueError, TypeError):
+        print("Digite um valor inteiro e valido para a diaria!\n")
+        return
+
+
+    novo_carro = Carro(modelo=modelo_novo, placa=placa_nova, portas=portas, valor_diaria=valor_diaria)
+    veiculos.append(novo_carro)
+    print("Carro cadastrado com sucesso")
 
 if __name__ == "__main__":
     main()
