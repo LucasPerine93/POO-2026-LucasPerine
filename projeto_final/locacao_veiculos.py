@@ -17,35 +17,35 @@ class Veiculo:
 
     def set_modelo(self, novo_modelo: str):
         if not isinstance(novo_modelo, str):
-            raise TypeError("O valor informado deve ser um texto!")
+            raise TypeError("[ERRO]: O valor informado deve ser um texto!")
         
         if novo_modelo != self.__modelo:
             print(f"Modelo: {self.__modelo} alterado para {novo_modelo} com sucesso")
             self.__modelo = novo_modelo
         else:
-            raise ValueError(f"[ERRO]: O modelo {self.__modelo} ja tem esse nome, para alterar coloque um dado diferente")
+            raise ValueError(f"[ERRO]: O modelo {self.__modelo} já tem esse nome, para alterar coloque um dado diferente")
 
     def set_placa(self, nova_placa: str):
         if not isinstance(nova_placa, str):
             raise TypeError("O valor informado deve ser um texto!")
         
         if nova_placa != self.__placa:
-            print(f"Modelo: {self.__placa} alterado para {nova_placa} com sucesso")
+            print(f"Placa: {self.__placa} alterada para {nova_placa} com sucesso")
             self.__placa = nova_placa
 
         else:
-            raise ValueError(f"[ERRO]: A placa {self.__placa} ja tem esse codigo, para alterar coloque um codigo diferente")
+            raise ValueError(f"[ERRO]: A placa {self.__placa} já tem esse código, para alterar coloque um código diferente")
 
     def set_valor_diaria(self, novo_valor: int):
         if not isinstance(novo_valor, int):
-            raise TypeError("O valor informado deve ser um numero!")
+            raise TypeError("[ERRO]: O valor informado deve ser um número!")
         
         if novo_valor > 0:
             print(f"Valor: R${self.__valor_diaria:.2f} alterado para R${novo_valor:.2f} com sucesso")
             self.__valor_diaria = novo_valor
 
         else:
-            raise ValueError(f"[ERRO]: O valor da diaria deve ser maior que 0")
+            raise ValueError(f"[ERRO]: O valor da diária deve ser maior que 0")
 
     @abstractmethod
     def calcular_aluguel(self, dias):
@@ -64,21 +64,21 @@ class Carro(Veiculo):
 
     def calcular_aluguel(self, dias):
         if not isinstance(dias, int):
-            raise TypeError("O valor informado deve ser um numero!")
+            raise TypeError("[ERRO]: O valor informado deve ser um número!")
         
         if dias > 0:
             valor = (dias * self.get_valor_diaria()) + self.__taxa_fixa
 
-            print(f"\nO carro de modelo: {self.get_modelo()}, foi alugado por {dias}  dias\n")
+            print(f"\nO carro de modelo: {self.get_modelo()}, foi alugado por {dias} dias\n")
             print("------------ RESUMO ------------")
             print(f"Valor alugado: R${valor:.2f}")
             print(f"Taxa de limpeza: R${self.__taxa_fixa}")
             print(f"Dias com o carro: {dias} dias")
-            print(f"Configuracao: carro com {self.portas} portas")
+            print(f"Configuração: carro com {self.portas} portas")
             print("--------------------------------")
 
         else:
-            raise ValueError(f"Os dias selecionados são menores ou iguais a 0")
+            raise ValueError(f"[ERRO]: Os dias selecionados são menores ou iguais a 0")
 
     def imprimir_status(self):
         print("\n================= STATUS DO CARRO =================")
@@ -98,22 +98,22 @@ class Moto(Veiculo):
 
     def calcular_aluguel(self, dias):
         if not isinstance(dias, int):
-            raise TypeError("O valor informado deve ser um numero!")
+            raise TypeError("[ERRO]: O valor informado deve ser um número!")
         
         if dias > 0:
             valor = (dias * self.get_valor_diaria())
             valor_com_taxa = valor - ((self.__taxa_fixa / 100) * valor)
 
-            print(f"\nA moto de modelo: {self.get_modelo()}, foi alugada por {dias}  dias\n")
+            print(f"\nA moto de modelo: {self.get_modelo()}, foi alugada por {dias} dias\n")
             print("------- RESUMO -------")
             print(f"Valor alugado: R${valor_com_taxa:.2f}")
             print(f"Taxa de desconto: {self.__taxa_fixa}%")
             print(f"Dias com a moto: {dias} dias")
-            print(f"Configuracao: moto com {self.cilindradas} cilindradas")
+            print(f"Configuração: moto com {self.cilindradas} cilindradas")
             print("----------------------")
         
         else:
-            raise ValueError(f"Os dias selecionados são menores ou iguais a 0")
+            raise ValueError(f"[ERRO]: Os dias selecionados são menores ou iguais a 0")
 
     def imprimir_status(self):
         print("\n================= STATUS DA MOTO ==================")
@@ -135,7 +135,7 @@ def exibir_opcoes():
     print("\n1. Simular aluguel da frota inteira")
     print("2. Cadastrar novo carro")
     print("3. Cadastrar nova moto")
-    print("4. Buscar veiculo pela placa")
+    print("4. Buscar veículo pela placa")
     print("0. Sair\n")
 
 
@@ -144,9 +144,9 @@ def main():
         exibir_opcoes()
 
         try:
-            opcao = int(input("Digite um numero: "))
+            opcao = int(input("Digite um número: "))
         except (ValueError, TypeError):
-            print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+            print("[ERRO]: Digite apenas números inteiros e válidos\n")
             continue
 
         if opcao == 1:
@@ -166,7 +166,7 @@ def main():
             break
 
         else:
-            print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+            print("[ERRO]: Opção inexistente no menu\n")
 
 def simular_aluguel():
     try:
@@ -174,7 +174,7 @@ def simular_aluguel():
         if dias is None or dias <= 0:
             raise ValueError()
     except (ValueError, TypeError):
-        print("[ERRO]: Digite apenas numeros inteiros e validos\n")
+        print("[ERRO]: Digite apenas números inteiros e válidos\n")
         return
     
     try:
@@ -190,76 +190,76 @@ def cadastrar_veiculo(tipo_veiculo: int):
             raise ValueError()
 
         if not isinstance(modelo_novo, str):
-            raise TypeError("Digite um tipo valido para modelo (string)")
+            raise TypeError("[ERRO]: Digite um tipo válido para modelo (string)")
         
     except (ValueError, TypeError):
-        print("Digite um nome valido para modelo\n")
+        print("[ERRO]: Digite um nome válido para o modelo\n")
         return
 
     try:
         placa_nova = str(input("Digite a placa: "))
         if not placa_nova.strip():
-            raise ValueError("Digite um valor valido para placa!\n")
+            raise ValueError("[ERRO]: Digite uma placa válida!\n")
 
         if not isinstance(placa_nova, str):
-            raise TypeError("Digite um tipo valido para placa (string)")
+            raise TypeError("[ERRO]: Digite um tipo válido para placa (string)")
         
         for i in veiculos:
             placa_frota = i.get_placa()
 
             if placa_frota == placa_nova:
-                raise ValueError("Essa placa ja existe na frota!")
+                raise ValueError("[ERRO]: Essa placa já existe na frota!")
 
     except (ValueError, TypeError) as e:
         print(e)
         return
 
     try:
-        valor_diaria = int(input("Digite o valor da diaria: "))
+        valor_diaria = int(input("Digite o valor da diária: "))
         if valor_diaria is None or valor_diaria <= 0:
             raise ValueError()
         
     except (ValueError, TypeError):
-        print("Digite um valor inteiro e valido para a diaria!\n")
+        print("[ERRO]: Digite um valor inteiro e válido para a diária!\n")
         return
     
     try:
         if tipo_veiculo == 1:
-            valor_personalizado = int(input("Digite o numero de portas: "))
+            valor_personalizado = int(input("Digite o número de portas: "))
 
         if tipo_veiculo == 2:
-            valor_personalizado = int(input("Digite o numero de cilindradas: "))
+            valor_personalizado = int(input("Digite o número de cilindradas: "))
 
         if valor_personalizado is None or valor_personalizado <= 0:
             raise ValueError()
         
     except (ValueError, TypeError):
         if tipo_veiculo == 1:
-            print("Digite um valor inteiro e valido para as portas!\n")
+            print("[ERRO]: Digite um valor inteiro e válido para as portas!\n")
 
         if tipo_veiculo == 2:
-            print("Digite um valor inteiro e valido para as cilindradas!\n")
+            print("[ERRO]: Digite um valor inteiro e válido para as cilindradas!\n")
 
         return
 
     if tipo_veiculo == 1:
         novo_carro = Carro(modelo=modelo_novo, placa=placa_nova, valor_diaria=valor_diaria, portas=valor_personalizado)
         veiculos.append(novo_carro)
-        print("Carro cadastrado com sucesso")
+        print("\n[SUCESSO]: Carro cadastrado com sucesso")
 
     if tipo_veiculo == 2:
         nova_moto = Moto(modelo=modelo_novo, placa=placa_nova, valor_diaria=valor_diaria, cilindradas=valor_personalizado)
         veiculos.append(nova_moto)
-        print("Moto cadastrada com sucesso")
+        print("\n[SUCESSO]: Moto cadastrada com sucesso")
 
 def buscar_veiculo():
     try:
-        placa_alvo = str(input("Digite a placa do veiculo: "))
+        placa_alvo = str(input("Digite a placa do veículo: "))
         if not placa_alvo.strip():
-            raise ValueError("Digite algo para buscar o veiculo")
+            raise ValueError("[ERRO]: Digite algo para buscar o veículo")
 
         if not isinstance(placa_alvo, str):
-            raise TypeError("Insira dados validos para buscar (string)")
+            raise TypeError("[ERRO]: Insira dados válidos para buscar (string)")
         
         for i in veiculos:
             placa = i.get_placa()
@@ -268,7 +268,7 @@ def buscar_veiculo():
                 i.imprimir_status()
                 return
         else:
-            print("Placa nao encontrada")
+            print("[ERRO]: Placa não encontrada")
 
     except (ValueError, TypeError) as  e:
         print(e)
