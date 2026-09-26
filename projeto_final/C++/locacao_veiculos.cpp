@@ -31,7 +31,7 @@ public:
 
     void set_modelo(const std::string& novo_modelo) {
         if (novo_modelo == modelo) {
-            throw std::invalid_argument("[ERRO]: O modelo digitado já tem esse nome, para alterar coloque um dado diferente");
+            throw std::invalid_argument("[ERRO]: O modelo digitado ja tem esse nome, para alterar coloque um dado diferente");
         }
 
         else {
@@ -42,7 +42,7 @@ public:
 
     void set_placa(const std::string& nova_placa) {
         if (nova_placa == placa) {
-            throw std::invalid_argument("[ERRO]: A placa digitada já tem esse código, para alterar coloque um código diferente");
+            throw std::invalid_argument("[ERRO]: A placa digitada ja tem esse codigo, para alterar coloque um código diferente");
         }
 
         else {
@@ -53,7 +53,7 @@ public:
 
     void set_valor_diaria(const double novo_valor) {
         if (novo_valor <= 0) {
-            throw std::invalid_argument("[ERRO]: O valor da diária deve ser maior que 0");
+            throw std::invalid_argument("[ERRO]: O valor da diaria deve ser maior que 0");
         }
 
         else {
@@ -78,7 +78,7 @@ public:
 
     void calcular_aluguel(const int dias) override {
         if (dias <= 0) {
-            throw std::invalid_argument("[ERRO]: Os dias selecionados são menores ou iguais a 0");
+            throw std::invalid_argument("[ERRO]: Os dias selecionados sao menores ou iguais a 0");
         }
 
         else {
@@ -153,7 +153,16 @@ void simular_aluguel() {
     int dias;
 
     std::cout << "Para quantos dias: ";
-    std::cin >> entrada;
+    std::getline(std::cin, entrada);
+
+    try {
+        if (entrada.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+    }
 
     try {
         dias = std::stoi(entrada);
@@ -174,7 +183,180 @@ void simular_aluguel() {
 
     }
     catch (const std::invalid_argument& e) {
-        std::cout << "\n" << e.what() << "\n\n"; 
+        std::cout << "\n" << e.what() << "\n\n";
+        return; 
+    }
+}
+
+void cadastrar_veiculo(const int modo) {
+    // SET MODELO
+    std::string modelo;
+
+    std::cout << "Digite o modelo: ";
+    std::getline(std::cin, modelo);
+
+    try {
+        if (modelo.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    //SET PLACA
+
+    std::string placa;
+
+    std::cout << "Digite a placa: ";
+    std::getline(std::cin, placa);
+
+    try {
+        if (placa.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+        
+        for (const auto& p : veiculos) {
+            if (placa == p->get_placa()) {
+                throw std::invalid_argument("[ERRO]: Essa placa ja existe na frota");
+            }
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    //SET VALOR DIARIA
+
+    std::string vd;
+    int valor_diaria;
+
+    std::cout << "Digite o valor da diaria: ";
+    std::getline(std::cin, vd);
+
+    try {
+        if (vd.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    try {
+        valor_diaria = std::stoi(vd);
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n[ERRO]: Digite apenas numeros inteiros validos\n";
+        return;
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "\n[ERRO]: Numero grande demais\n";
+        return;
+    }
+
+    try {
+        if (valor_diaria <= 0) {
+            throw std::invalid_argument("[ERRO]: O valor da diaria deve ser maior que 0");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    //VALOR PERSONALIZADO
+
+    std::string vp;
+    int valor_personalizado;
+
+    if (modo == 1) {
+        std::cout << "Digite quantas portas o carro tem: ";
+    } 
+
+    if (modo == 2) {
+        std::cout << "Digite cilindradas a moto tem: ";
+    }
+
+    std::getline(std::cin, vp);
+
+    try {
+        if (vp.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    try {
+        valor_personalizado = std::stoi(vp);
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n[ERRO]: Digite apenas numeros inteiros validos\n";
+        return;
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "\n[ERRO]: Numero grande demais\n";
+        return;
+    }
+
+    try {
+        if (valor_personalizado <= 0) {
+            throw std::invalid_argument("\n[ERRO]: Digite apenas numeros inteiros validos\n");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    if (modo == 1) {
+        veiculos.push_back(std::make_unique<Carro>(modelo, placa, valor_diaria, valor_personalizado));
+        std::cout << "\n[SUCESSO]: Novo carro cadastrado\n";
+    }
+
+    if (modo == 2) {
+        veiculos.push_back(std::make_unique<Moto>(modelo, placa, valor_diaria, valor_personalizado));
+        std::cout << "\n[SUCESSO]: Nova moto cadastrada\n";
+    }
+}
+
+void buscar_veiculo() {
+    std::string placa_alvo;
+    std::string placa;
+
+    std::cout << "Digite a placa do veiculo: ";
+    std::getline(std::cin, placa_alvo);
+
+    try {
+        if (placa_alvo.empty()) {
+            throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+        }
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
+    }
+
+    try {
+        for (const auto& p : veiculos) {
+            placa = p->get_placa();
+
+            if (placa_alvo == placa) {
+                p->imprimir_status();
+                return;
+            }
+        }
+        throw std::invalid_argument("[ERRO]: Placa nao encontrada");
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "\n" << e.what() << "\n\n";
+        return;
     }
 }
 
@@ -199,7 +381,17 @@ int main() {
         int opcao = 0;
 
         std::cout << "Digite um numero: ";
-        std::cin >> entrada;
+        std::getline(std::cin, entrada);
+
+        try {
+            if (entrada.empty()) {
+                throw std::invalid_argument("[ERRO]: Digite algo no campo de texto");
+            }
+        }
+        catch (const std::invalid_argument& e) {
+            std::cout << "\n" << e.what() << "\n\n";
+            continue;
+        }
 
         try {
             opcao = std::stoi(entrada);
@@ -215,6 +407,18 @@ int main() {
 
         if (opcao == 1) {
             simular_aluguel();
+        }
+
+        else if (opcao == 2) {
+            cadastrar_veiculo(1);
+        }
+
+        else if (opcao == 3) {
+            cadastrar_veiculo(2);
+        }
+
+        else if (opcao == 4) {
+            buscar_veiculo();
         }
 
         else if (opcao == 0) {
