@@ -189,7 +189,6 @@ void simular_aluguel() {
 }
 
 void cadastrar_veiculo(const int modo) {
-    // SET MODELO
     std::string modelo;
 
     std::cout << "Digite o modelo: ";
@@ -204,8 +203,6 @@ void cadastrar_veiculo(const int modo) {
         std::cout << "\n" << e.what() << "\n\n";
         return;
     }
-
-    //SET PLACA
 
     std::string placa;
 
@@ -227,8 +224,6 @@ void cadastrar_veiculo(const int modo) {
         std::cout << "\n" << e.what() << "\n\n";
         return;
     }
-
-    //SET VALOR DIARIA
 
     std::string vd;
     int valor_diaria;
@@ -267,8 +262,6 @@ void cadastrar_veiculo(const int modo) {
         std::cout << "\n" << e.what() << "\n\n";
         return;
     }
-
-    //VALOR PERSONALIZADO
 
     std::string vp;
     int valor_personalizado;
